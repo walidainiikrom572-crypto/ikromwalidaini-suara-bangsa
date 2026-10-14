@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suara Hati Bangsa | Ikromwalidaini</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --dark: #0a0f1a;
+            --red-dark: #7f1d1d;
+            --red-accent: #dc2626;
+            --gold: #eab308;
+            --slate: #1e293b;
+        }
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Partikel latar */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(234, 179, 8, 0.3);
+            border-radius: 50%;
+            animation: float-up linear infinite;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+        
+        /* Garis berkedip */
+        .glow-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red-accent), var(--gold), transparent);
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        
+        /* Kartu kutipan */
+        .quote-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(234, 179, 8, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .quote-card:hover::before {
+            left: 100%;
+        }
+        
+        .quote-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(220, 38, 38, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(220, 38, 38, 0.05);
+        }
+        
+        /* Muncul berangsur */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Tipe efek mengetik */
+        .typewriter {
+            border-right: 2px solid var(--gold);
+            animation: blink 0.8s step-end infinite;
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        /* Navbar berubah */
+        .nav-scrolled {
+            background: rgba(10, 15, 26, 0.95) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Angka berkedip */
+        .pulse-slow {
+            animation: pulse-slow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Efek getar lemah */
+        .gentle-shake:hover {
+            animation: gentle-shake 0.4s ease-in-out;
+        }
+        
+        @keyframes gentle-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+    <!-- Partikel Latar -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-wider">
+                <span class="text-red-500">IKROM</span><span class="text-yellow-500">WALIDAINI</span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm">
+                <a href="#beranda" class="hover:text-yellow-400 transition-colors">Beranda</a>
+                <a href="#mutiara" class="hover:text-yellow-400 transition-colors">Kata Mutiara</a>
+                <a href="#renungan" class="hover:text-yellow-400 transition-colors">Renungan</a>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full pulse-slow"></span>
+                <span>Suara Rakyat</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="min-h-screen flex flex-col justify-center items-center pt-20 px-6 relative z-10">
+        <div class="text-center fade-up">
+            <p class="text-yellow-500/70 text-lg mb-4">— Sebuah Renungan Untuk Negeri —</p>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
+                Ketika Kekuasaan<br>
+                <span class="text-red-500">Melupakan Rakyatnya</span>
+            </h1>
+            <div class="glow-line w-48 mx-auto mb-8"></div>
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+                "Kekuasaan adalah amanah, bukan warisan. Pemimpin yang egois tak akan pernah mendengar tangisan rakyat — karena ia terlalu sibuk mendengar pujian di sekelilingnya."
+            </p>
+            <p class="text-yellow-500/60 italic">— Ikromwalidaini</p>
+        </div>
+        
+        <div class="absolute bottom-10 animate-bounce text-slate-500">
+            <i class="fa fa-angle-down"></i>
+        </div>
+    </section>
+
+    <!-- Kata-Kata Mutiara -->
+    <section id="mutiara" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <span class="text-red-500/70 text-sm tracking-widest">KATA MUTIARA</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-slate-100 mt-2">Tentang Pemerintahan yang Egois</h2>
+                <p class="text-slate-500 mt-3">Bijaklah dalam melihat, bijaksanalah dalam berbicara</p>
+                <div class="glow-line w-32 mx-auto mt-6"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 1 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Pemerintahan yang egois bagaikan kapal yang nakhodanya hanya memikirkan dirinya sendiri — ia tak peduli penumpangnya tenggelam, asalkan ia selamat di sekoci paling nyaman."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 2 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Pemimpin yang zalim tidak takut pada kebenaran — ia takut pada rakyat yang mulai sadar. Maka ia bungkam kritik, ia putuskan informasi, ia bangun tembok kebohongan — semata-mata agar ia tetap terlihat sempurna di cerminnya sendiri."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 3 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Janji manis di atas mimbar adalah modal termurah bagi penguasa yang tak berniat menepati. Semakin megah janjinya, semakin waspadalah — karena biasanya di balik janji yang terlalu indah, tersembunyi ketidakadilan yang semakin dalam."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 4 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Kekuasaan yang membutakan mata hati, akan dibukakan oleh air mata rakyat yang menderita. Dan sejarah selalu mencatat dengan tinta yang tak bisa dihapus: penguasa yang menindas, akhirnya jatuh oleh rakyat yang dibungkamnya."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 5 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Ada penguasa yang membangun istana dari keringat rakyat, lalu berkata: 'Lihatlah, aku telah membangun banyak hal!' Lupa ia — istana itu bukan dibangun dengan tangannya, tapi dengan penderitaan yang tak pernah ia rasakan."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 6 -->
+                <div class="quote-card rounded-xl p-8 fade-up">
+                    <i class="fa fa-quote-left text-3xl text-yellow-600/20 mb-4"></i>
+                    <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                        "Ketika pemimpin lebih peduli pada citra daripada kenyataan, lebih takut pada kritik daripada kesalahan, lebih mendengarkan penyanjung daripada rakyat kecil — ketahuilah bahwa pemerintahan seperti itu telah kehilangan jiwanya."
+                    </p>
+                    <span class="text-yellow-500/60 text-sm">— Ikromwalidaini</span>
+                </div>
+
+                <!-- 7 -->
+                <div class="quote-card rounded-xl p-8 fade-up md:col-span-2 gentle-shake">
+                    <i class="fa fa-quote-left text-3xl text-red-600/30 mb-4"></i>
+                    <p class="text-xl text-slate-200 leading-relaxed mb-6 text-center">
+                        "Negara bukan milik pemimpin, tapi pemimpin adalah milik negara. Jika pemimpin lupa ini, maka ia bukan pelindung rakyat — ia adalah penguasa yang merampok masa depan generasi yang tak bersalah. Tapi ingatlah: malam paling gelap justru melahirkan fajar yang paling terang. Indonesia tak akan pernah mati selama masih ada hati yang peduli."
+                    </p>
+                    <p class="text-slate-500 text-sm italic text-center mb-4">
+                        ⚠️ Catatan: Tulisan ini adalah pandangan pribadi dan refleksi semata. Setiap kebijakan dan kepemimpinan memiliki beragam perspektif yang perlu dipahami secara utuh dan objektif. Menyampaikan pendapat harus tetap santun dan sesuai hukum yang berlaku.
+                    </p>
+                    <span class="block text-yellow-500/60 text-sm text-center">— Ikromwalidaini</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Renungan -->
+    <section id="renungan" class="py-20 px-6 border-t border-slate-800/50 relative z-10">
+        <div class="max-w-3xl mx-auto text-center fade-up">
+            <h3 class="text-2xl font-serif font-bold text-slate-200 mb-6">Harapan di Tengah Kegelapan</h3>
+            <p class="text-slate-400 leading-relaxed mb-6">
+                Mengkritik bukan berarti membenci negara — justru karena mencintai, maka kita tak rela melihat bangsa ini salah jalan. Perubahan tak terjadi dalam semalam, tapi dimulai ketika satu orang berani berkata: <em>"Ini tidak benar, dan kita bisa lebih baik dari ini."</em>
+            </p>
+            <p class="text-yellow-500/70 italic text-lg">
+                "Bangsa yang besar adalah bangsa yang berani jujur pada dirinya sendiri."
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-slate-800/50 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glow-line w-24 mx-auto mb-6"></div>
+            <p class="text-slate-500 text-sm mb-4">
+                © 2026 <span class="text-yellow-500/80 font-semibold">Ikromwalidaini</span> — Sebuah ruang untuk berpikir kritis
+            </p>
+            <p class="text-slate-600 text-xs">
+                "Bicaralah dengan kebenaran, berdiri dengan keberanian, dan berharap dengan ketekunan."
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Buat partikel latar
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 40;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (8 + Math.random() * 12) + 's';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            p.style.opacity = 0.1 + Math.random() * 0.3;
+            particlesContainer.appendChild(p);
+        }
+        
+        // Muncul elemen saat di-scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Navbar berubah saat di-scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
